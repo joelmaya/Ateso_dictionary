@@ -1,0 +1,30 @@
+{% extends 'dict/index.html' %}
+{% load social_share %}
+	{% block content %}
+		<div class = "row">
+			<div class = "col-lg-8">
+			<article class="content-section" style="margin-right: 2px; margin-left: 2px;">
+			  <div class="card card-body">
+				    <h5>Word:<strong>{{ Item.word}}</strong></h5>
+				   <hr>
+				    <p class="article-content">Translation: <strong>{{ Item.translate}}</strong></p>
+				    </div>
+			</article>
+		</div>
+		<div class = "col-md-4 ml-2" style="text-align: center;">
+			<div class = "card card-body">
+			<h3>Recently Viewed Word</h3>
+			<hr>
+			{% for recent_word in recently_viewed_word %}
+			<p><a href="{%  url 'detail' recent_word.id %}">{{ recent_word.word}}</a></p>
+			{% endfor %}
+			</div>
+		</div>
+		</div>
+				     <div style="display: inline-flex; margin-top: 10px; margin-left: 10%;">
+                        <h4 class = "text-muted">Share: </h4>
+                        <button class = "btn btn-primary " style="margin-left: 2px; height: 30px; padding-bottom: 25px; padding-top:2px;">{% post_to_facebook object_or_url "Facebook!" %}</button>
+                        <button class = "btn btn-success" style="margin-left: 2px; height: 30px; padding-bottom: 25px; padding-top:2px;">{% post_to_whatsapp  object_or_url "Whatsup" %}</button>
+                        <button class = "btn btn-info" style="margin-left: 2px; height: 30px; padding-bottom: 25px; padding-top:2px;">{% post_to_twitter object_or_url "Twitter" %}</button>
+                      </div>
+		{% endblock content %}

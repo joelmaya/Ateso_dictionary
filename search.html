@@ -1,0 +1,51 @@
+{% extends 'dict/index.html' %}
+{% load social_share %}
+	{% block content %}
+     <div class = 'container'>
+     	<div class = 'row'>
+
+     		<div class = 'col-md-12'>
+     			<h3 style="margin-top: 50px;">Search Results for <span class = "text-info">"{{ request.GET.keyword }}"</span></h1>
+                
+     			<hr>
+         	
+    			  {% for result in results %}
+                        <ol style="display: list-item; list-style-position: outside; margin-left: 4%;">          
+                        <li style="list-style: none; padding: 0;"><a href="{% url 'detail' result.id %}">{{ result.word }}</a></li>
+                        </ol>	
+    		     {% endfor %}
+
+                       {% if results.has_previous %}
+
+                        <a class = "btn btn-outline-info" href="{% url 'search' %}?page=1">First</a>
+                        <a  class = "btn btn-outline-info" href="{% url 'search' %}?page={{ results.previous_page_num }}">Previous</a>
+
+                       {% endif %}
+
+                       {% for num in results.paginator.page_range %}
+
+                       {% if results.number == num %}
+
+                        <a  class = "btn btn-info" href="{% url 'search' %}?page={{ num }}">{{ num }}</a>
+
+                        {% elif num > results.number|add:'-3' and num < results.number|add:'3'   %}
+                        <a  class = "btn btn-outline-info" href="{% url 'search' %}?page={{ num }}">{{ num }}</a>
+
+                        {% endif %}
+                       {% endfor %}
+
+                       {% if results.has_next %}
+
+                       <a class = "btn btn-outline-info" href="{% url 'search' %}?page = {{ results.next_page_num }}">Next</a>
+                       <a  class = "btn btn-outline-info" href="{% url 'search' %}?page={{ results.paginator.num_pages }}">Last</a>
+
+                       {% endif %}
+
+    			     			
+     		</div>
+     		
+     	</div>
+     	
+     </div>
+	
+	{% endblock content %}
